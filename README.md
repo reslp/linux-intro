@@ -222,12 +222,10 @@ directory, i.e. list all the files. You can list the files (and
 directories) in your working directory using the ls command. For this
 exercise we will be using the raw data folder.
 
-[!CAUTION]
-Spaces in file and directory names cause difficulties as the shell
-(called
-'[[bash]{.underline}](https://en.wikipedia.org/wiki/Bash_(Unix_shell))')
-treats spaces as the end of a file name. When looking for 'my file' it
-complains that it can't find 'my'.
+>[!CAUTION]
+>Spaces in file and directory names cause difficulties as the shell
+treats spaces as the end of a file name. When looking for `my file` it
+complains that it can't find `my`.
 
 \$ cd my directory
 
