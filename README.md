@@ -1,7 +1,29 @@
-
 # Introduction to Linux and working on the command line
 
-## 1 A brief history of linux
+**Contents**
+
+**1 First steps**\
+  - [1.0 A brief history of Unix and Linux](#a-brief-history-of-unix-and-linux)\
+  - [1.1 Basic concepts and definitions](#basic-concepts-and-definitions)\
+  - [1.2 Connecting to remote computers](#connecting-to-remote-computers)\
+**2 Basic commands**\
+  - [2.1 Navigating the file system](#navigating-the-file-system)\
+  - [2.2 Editing, inspecting, and searching within text files](#editing-inspecting-and-searching-within-text-files)\
+  - [2.3 Search, replace, and write output to a new file](#search-replace-and-write-output-to-a-new-file)\
+  - [2.4 Combining multiple commands into scripts](#combining-multiple-commands-into-scripts)\
+**[3 Additional reading](#additional-reading)**
+
+# 1 First steps
+
+## 1.0 A brief history of Unix and Linux
+
+Unix is an operating system first developed in the late 1960s at AT&T's Bell Labs by [Ken Thompson](https://en.wikipedia.org/wiki/Ken_Thompson), [Dennis Ritchie](https://en.wikipedia.org/wiki/Dennis_Ritchie), and others. It was designed to be portable (could be adapted quickly to different hardware), multi-tasking (can run multiple tasks simultaneously), and multi-user (yould be used by multiple people at the same time). Unix was written in a high-level programming language ([C](https://en.wikipedia.org/wiki/C_(programming_language))) which was a revolutionary concept at the time as, until then, operating systems were usually written in [assembly](https://en.wikipedia.org/wiki/Assembly_language) language. This made Unix easy to modify, expand, and port to other machines.
+
+Linux is a Unix-like operating system that came into existence in the early 1990s when a Finnish student, [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds), started a project to create a new free operating system kernel. Unix variants at the time were all proprietary. Torvalds released the initial code on the internet and invited others to contribute. This collaborative, open-source approach allowed Linux to grow rapidly.
+
+Linux is based on the principles and design of Unix however it is built from scratch by a community of developers worldwide, led by Torvalds. It is free to use and distribute, which has led to its widespread use across personal computers, servers, mobile devices, and more. Over time, groups of developers have packaged the Linux kernel with a variety of software to create complete operating systems, known as distributions (distros), like Ubuntu, Fedora, and Debian.
+
+The similarities between Unix and Linux boil down to their shared design philosophies, use of a common command-line interface (CLI), and similar system architecture. However, they differ in their licensing, with Unix often being proprietary and Linux being free and open-source. Both operating systems have had a profound impact on the computing landscape, influencing the development of various systems and applications that we use today.
 
 
 There are many reasons to use the command line (also known as the
@@ -44,7 +66,7 @@ The exercises are split into sections of text with explanations of what we are d
 # This is an example code block. Typically you can copy and paste what is here and execute it by pressing <Return>.
 ```
 
-## 1.2 Connectiong to a remote computer
+## 1.2 Connecting to remote computers
 
 Since we will be analyzing very large datasets, our own laptops and desktop computers typically do not have enought memory or CPU power. Hence we will be working on 
 the University of Graz High-Performance Compute Cluster - [GSC](https://hpc-wiki.uni-graz.at/). Using our UGO Account and passwords you should be able to log in.
@@ -59,6 +81,8 @@ username@IT010044: ~ $
 ```
 
 This should log you in to the Uni Graz cluster. Mind you that this only works from inside the University network or through a VPN connection.
+
+# 2 Basic commands
 
 ## 2.1 Navigating the file system
 
@@ -227,64 +251,58 @@ exercise we will be using the raw data folder.
 treats spaces as the end of a file name. When looking for `my file` it
 complains that it can't find `my`.
 
-\$ cd my directory
-
+Look here:
+```
+$ cd my directory
 -bash: cd: my: No such file or directory
+```
 
-Although this can be got around by using quotes cd 'my file' replacing
+Although this can be got around by using quotes `cd 'my file'` replacing
 with underscores (e.g. my_file), hyphens (e.g. my-file), or
-concatenating the words (e.g. myfile) are usually better ways to work..
-Underscores can be hard to see sometimes in this manual's colour scheme,
-sorry, but they are always there- never spaces.
+concatenating the words (e.g. myfile) are usually better ways to work.
 
-\$ ls
+```
+$ ls
+```
 
-Try listing files in long format as ls -l
+Try listing files in long format.
 
-**Tip:** you can Google to find out what all the data listed means, or
-use unix's built in manual pages
+>[!TIP]
+>You can Google to find out what all the data listed means, or better use the built in manual (man) pages.
 
-\$ man ls
+```
+$ man ls
+```
 
 Hit the spacebar to advance through the pages. Typing q (quit) will get
-you out of a man page. You can use man with any command, not just ls
+you out of a man page. You can use man with any command, not just `ls`.
 
-**Googling is not cheating**, it\'s a great way to learn and is highly
+```
+$ man man
+```
+
+**Googling is not cheating**, it is a great way to learn and is highly
 recommended.
 
-You should go to the directory '**day-1** and investigate what is
-present- a single [[fasta
-sequence]{.underline}](http://drive.google.com/open?id=1SE1YxDwsLmndZX8DgBx2jq8RPk1yRb2aJOqk7cUm0Ys)
-file (.fas). You can do this of course by [c]{.underline}hanging
-[d]{.underline}irectory, [p]{.underline}rint your [w]{.underline}orking
-[d]{.underline}irectory to check where you are, and
-[l]{.underline}i[s]{.underline}ting the files present:
-
-\$ cd day-1
-
-\$ pwd
-
-/home/symbiont/genomics_course/day-1
-
-\$ ls
-
-scaffold.fas
+ADD SMALL NAVIGATION EXERCISE
 
 How would you do this on a single line command? Show that it works
 
-### **2.1.3 Some things you will have noticed** 
+### 2.1.3 Some things you will have noticed 
 
 [Firstly]{.underline} you have to type very carefully, any typo and you
 will get an error that the file or directory doesn't exist, e.g:
 
-\$ cd dayy-1
-
+```
+$ cd dayy-1
 bash: cd: dayy-1: No such file or directory
+```
 
-A [second thing]{.underline} you will have noticed is that some file
+A second thing you will have noticed is that some file
 names are long, complex, and difficult to type without errors.
 
-Tip: you need to learn to use the tab key to autocomplete names.
+>[!TIP] 
+>You need to learn to use the *tab* key to autocomplete names.
 
 Real command line gurus use the tab key extensively. If you start typing
 the command and then hit tab the filename will be auto completed, or, if
@@ -295,14 +313,14 @@ letters. It will also autocomplete the portion of the file or directory
 name that is shared between them all and wait for you to type more and
 hit tab again.
 
-Try it now. Navigate to genomics_course/raw_data/ and list the files
+Try it now. Navigate to `genomics_course/raw_data/` and list the files
 present. You should have explored using tab to autocomplete the
-directory names at every level. If not quickly jump back using cd - and
+directory names at every level. If not quickly jump back using `cd -` and
 try again.
 
-## **2.2 Editing, inspecting, and searching within text files**
+## 2.2 Editing, inspecting, and searching within text files
 
-### **2.2.1 Editing files**
+### 2.2.1 Editing files
 
 UNIX based systems provide several powerful utilities for editing and
 inspecting files, either from the command line, or in a simple graphical
@@ -312,66 +330,70 @@ viewing and editing in a graphical way, much like **Notepad** or
 has limitations and is a waste of your time on this course, learn the
 command line instead. Here we will use the simple text editor nano there
 are many others beyond the scope of this tutorial. The strength of nano
-lies in its simplicity. Help: [[a beginners guide to]{.underline}
-[nano]{.underline}](http://www.howtogeek.com/howto/42980/the-beginners-guide-to-nano-the-linux-command-line-text-editor/)
+lies in its simplicity. Help: [[a beginners guide to]
+[nano]](http://www.howtogeek.com/howto/42980/the-beginners-guide-to-nano-the-linux-command-line-text-editor/)
 
 To view our **scaffold.fas** file in nano you should use the general
 unix approach of program-name filename, and assuming we are still in the
 **day-1** directory:
 
-\$ nano scaffold.fas
+```
+$ nano scaffold.fas
+```
 
 Did you tab complete the name? If not exit using Ctrl+X and try again.
-Reinforce your skills
+*Reinforce your skills*
 
-**TASK**: To practice nano rename the sequence to \>fungal_scaffold Save
+**TASK**: To practice nano rename the sequence to `>fungal_scaffold` save
 the changes using Ctrl-O (called writing-**O**ut), it will ask you if
 you want to save to the same file, don't, give a new informative name
 like:
 
-**scaffold_renamed.fas**
+```
+scaffold_renamed.fas
+```
 
-**Tip:** To close nano you should use the Ctrl+X key combination (see
+>[!TIP]
+>To close nano you should use the Ctrl+X key combination (see
 \^X Exit in the lower left of the nano screen, where the \^ denotes the
-Ctrl key). You can find [[nano help
-pages]{.underline}](http://mintaka.sdsu.edu/reu/nano.html) with a Google
-search.
+Ctrl key). You can find [nano helppages](http://mintaka.sdsu.edu/reu/nano.html) with a Google
+search. You can also use `man nano`.
 
-To close less (below) you should just type q. Using Ctrl+X or q will
+To close less (below) you should just type `q`. Using Ctrl+X or q will
 generally close most UNIX programs, if either of those don't work you
-can also use the Ctrl+C key combination to kill the program and return
+can also use the Ctrl+C key combination to *kill* the program and return
 to the command prompt.
 
-### **2.2.2 Inspecting files**
+### 2.2.2 Inspecting files
 
-nano allows us to edit the file in situ, however, if we just want to
+nano allows us to edit the file *in situ*, however, if we just want to
 inspect the file we can display its contents using several other UNIX
 programs:
 
-1.  cat to print the whole file to the screen
+1.  `cat` to print the whole file to the screen
 
-2.  less to print the file a page at a time to the screen
+2.  `less` to print the file a page at a time to the screen
 
-3.  head to print the first few lines of the file on screen
+3.  `head` to print the first few lines of the file on screen
 
-4.  tail to print the last few lines of the file on screen
+4.  `tail` to print the last few lines of the file on screen
 
 One of the problems with DNA sequence files is that they can be large -
 several hundred megabytes to a few gigabytes is not uncommon. Viewing
 these files can be difficult, as the files need to be loaded into
 memory, and can therefore take a great deal of time for the text editor
-to read from the disk. The less, head and tail commands are very
+to read from the disk. The `less`, `head` and `tail` commands are very
 efficient for viewing large files such as these.
 
 **TASK:** All these commands will be useful for you during this course.
 You should now try using less, head, tail and cat to practice seeing the
-text file "parmelia_sequences.fas" which can be found in
-\~/raw_data/fasta/. Are you using ls to see what is available and tab to
+text file `parmelia_sequences.fas` which can be found in
+`~/raw_data/fasta/`. Are you using ls to see what is available and tab to
 complete the filename? How can you step through the file a screen at a
 time using less? Try Googling for the answer and demonstrate that it
 works.
 
-### **2.2.3 Searching within files**
+### 2.2.3 Searching within files
 
 **Searching** within very large files however can be even more
 troublesome, especially using the standard find functions in a text
@@ -379,24 +401,25 @@ editor, which aren't optimised for performing searches across very large
 files. For this reason various tools have been created that allow users
 to search within large files from the command line, and are highly
 optimised for their function. One of the most useful utilities for
-searching within a file is grep (**g**lobal **r**egular **e**xpression
+searching within a file is `grep` (**g**lobal **r**egular **e**xpression
 **p**arser).
 
-grep is very simple to use. At the command line you will need to type
+`grep` is very simple to use. At the command line you will need to type
 the word grep, followed by the text you are searching for, followed by
 where (the filename) to look for it. For example, to search for the word
-RPB1in our parmelia_sequences.fas file we do the following:
+RPB1in our `parmelia_sequences.fas` file we do the following:
 
-\$ grep "RPB1" 18S_parmelia_sequences.fas[\
-]{.mark}
-
-This returns all the lines containing the word **RPB1**.
+```
+$ grep "RPB1" 18S_parmelia_sequences.fas
+```
+This returns all the lines containing the word *RPB1*.
 
 We can count how many of the sequences are RPB1 by using the *count*
-flag (-c) with grep as follows:
+flag (`-c`) with `grep` as follows:
 
-\$ grep --c "RPB1" 18S_parmelia_sequences.fas[\
-]{.mark}1
+```
+$ grep --c "RPB1" 18S_parmelia_sequences.fas
+```
 
 ### **2.2.4 How many sequences do I have?**
 
@@ -427,7 +450,7 @@ recent commands, and eventually the command line will clear completely,
 i.e. you are back to the present 'no command'. Type history to see a
 list of all your previous commands or Ctrl-R to search them.
 
-## **2.3 Search, replace, and write output to a new file**
+## 2.3 Search, replace, and write output to a new file
 
 grep is an excellent tool for undertaking simple yet fast searches
 within text files. But to search [and replace]{.underline} within a text
@@ -576,7 +599,7 @@ useful when you need to record lots of output file information.
 By this stage you have done a lot of work, and learned a lot. Take a
 break and check before proceeding.
 
-## **2.4 Simple analysis scripts (programs)**
+## **2.4 Combining multiple commands into scripts**
 
 ### **2.4.1 Text-processing scripts**
 
@@ -775,7 +798,7 @@ you can use the internet just like a proper bioinformatician.
 
 5.  
 
-## **2.7 Some reading if you wish to extend your knowledge**
+## 3 Additional reading
 
 1.  UNIX Tutorial for Beginners
     [[http://www.ee.surrey.ac.uk/Teaching/Unix/]{.underline}](http://www.ee.surrey.ac.uk/Teaching/Unix/)
