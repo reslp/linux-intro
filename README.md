@@ -2,15 +2,17 @@
 
 **Contents**
 
-**1 First steps**\
-  - [1.0 A brief history of Unix and Linux](#a-brief-history-of-unix-and-linux)\
-  - [1.1 Basic concepts and definitions](#basic-concepts-and-definitions)\
-  - [1.2 Connecting to remote computers](#connecting-to-remote-computers)\
-**2 Basic commands**\
-  - [2.1 Navigating the file system](#navigating-the-file-system)\
-  - [2.2 Editing, inspecting, and searching within text files](#editing-inspecting-and-searching-within-text-files)\
-  - [2.3 Search, replace, and write output to a new file](#search-replace-and-write-output-to-a-new-file)\
-  - [2.4 Combining multiple commands into scripts](#combining-multiple-commands-into-scripts)\
+**1 First steps** 
+  - [1.0 A brief history of Unix and Linux](#a-brief-history-of-unix-and-linux)  
+  - [1.1 Basic concepts and definitions](#basic-concepts-and-definitions)  
+  - [1.2 Connecting to remote computers](#connecting-to-remote-computers)  
+
+**2 Basic commands**  
+  - [2.1 Navigating the file system](#navigating-the-file-system)  
+  - [2.2 Editing, inspecting, and searching within text files](#editing-inspecting-and-searching-within-text-files)  
+  - [2.3 Search, replace, and write output to a new file](#search-replace-and-write-output-to-a-new-file)  
+  - [2.4 Combining multiple commands into scripts](#combining-multiple-commands-into-scripts)  
+
 **[3 Additional reading](#additional-reading)**
 
 # 1 First steps
@@ -221,7 +223,7 @@ again to practice your new skills. Test yourself first, but it's OK to
 review different ways to do this again from the manual above. Looking
 things up is not cheating.
 
-#### **2.1.1.1 Ways to return home**
+#### 2.1.1.1 Ways to return home
 
 There are 5 ways that you should now know to return to your home
 directory. Try each to show that they work and discuss with others, 
@@ -258,8 +260,8 @@ $ cd my directory
 ```
 
 Although this can be got around by using quotes `cd 'my file'` replacing
-with underscores (e.g. my_file), hyphens (e.g. my-file), or
-concatenating the words (e.g. myfile) are usually better ways to work.
+with underscores (e.g. `my_file`), hyphens (e.g. `my-file`), or
+concatenating the words (e.g. `myfile`) are usually better ways to work.
 
 ```
 $ ls
@@ -268,7 +270,7 @@ $ ls
 Try listing files in long format.
 
 >[!TIP]
->You can Google to find out what all the data listed means, or better use the built in manual (man) pages.
+>You can Google to find out what all the data listed means, or better use the built in manual (`man`) pages.
 
 ```
 $ man ls
@@ -290,7 +292,7 @@ How would you do this on a single line command? Show that it works
 
 ### 2.1.3 Some things you will have noticed 
 
-[Firstly]{.underline} you have to type very carefully, any typo and you
+Firstly, you have to type very carefully, any typo and you
 will get an error that the file or directory doesn't exist, e.g:
 
 ```
@@ -330,8 +332,7 @@ viewing and editing in a graphical way, much like **Notepad** or
 has limitations and is a waste of your time on this course, learn the
 command line instead. Here we will use the simple text editor nano there
 are many others beyond the scope of this tutorial. The strength of nano
-lies in its simplicity. Help: [[a beginners guide to]
-[nano]](http://www.howtogeek.com/howto/42980/the-beginners-guide-to-nano-the-linux-command-line-text-editor/)
+lies in its simplicity. Help: [a beginners guide to nano](http://www.howtogeek.com/howto/42980/the-beginners-guide-to-nano-the-linux-command-line-text-editor/)
 
 To view our **scaffold.fas** file in nano you should use the general
 unix approach of program-name filename, and assuming we are still in the
@@ -421,7 +422,7 @@ flag (`-c`) with `grep` as follows:
 $ grep --c "RPB1" 18S_parmelia_sequences.fas
 ```
 
-### **2.2.4 How many sequences do I have?**
+### 2.2.4 How many sequences do I have?
 
 A very common question is to ask '**how many sequence records are in
 this enormous fasta file?**' You could of course search for all the
