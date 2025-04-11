@@ -96,13 +96,12 @@ Congrats, you have successfully executed your first command line program which s
 
 # 2 Basic commands
 
-> [!IMPORTANT]
-> Before you proceed type (or copy-paste) the following text into your shell and hit Return (Enter). This will automatically download the input data for this course.
-> We will discuss later what exactly this command is doing:
->
-> ```
-> $ git clone https://github.com/reslp/linux-intro.git
-> ```
+>[!IMPORTANT]
+>Before you proceed type (or copy-paste) the following text into your shell and hit Return (Enter). This will automatically download the input data for this course.
+>We will discuss later what exactly this command is doing:
+>```
+>$ git clone https://github.com/reslp/linux-intro.git
+>```
 
 
 ## 2.1 Navigating the file system
