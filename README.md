@@ -2,10 +2,11 @@
 
 **Contents**
 
-**1 First steps** 
-  - [1.0 A brief history of Unix and Linux](#a-brief-history-of-unix-and-linux)  
-  - [1.1 Basic concepts and definitions](#basic-concepts-and-definitions)  
-  - [1.2 Connecting to remote computers](#connecting-to-remote-computers)  
+**1 First steps**   
+  - [1.1 A brief history of Unix and Linux](#a-brief-history-of-unix-and-linux)  
+  - [1.2 What is the Linux shell?](#what-is-the-linux-shell)  
+  - [1.3 Basic concepts and definitions](#basic-concepts-and-definitions)  
+  - [1.4 Connecting to remote computers](#connecting-to-remote-computers)  
 
 **2 Basic commands**  
   - [2.1 Navigating the file system](#navigating-the-file-system)  
@@ -15,9 +16,20 @@
 
 **[3 Additional reading](#additional-reading)**
 
+# 0 Learning goals
+
+- Today we will learn how to work in command-line interaces of Unix based systems.
+- We will teach you the basics of navigating the file system, viewing and searching large data files.
+- You will also learn to chain commands together to make your work quicker and more reproducible.
+- We will introduce ways on how to think about your data analysis with powerful command line tools. 
+
+**A great way to learn and extend your knowledge about the command line is to search online for instructions and then try them yourself, experimenting as much as you can.**
+
+The computer is our lab and we want to use it as efficiently as possible.
+
 # 1 First steps
 
-## 1.0 A brief history of Unix and Linux
+## 1.1 A brief history of Unix and Linux
 
 Unix is an operating system first developed in the late 1960s at AT&T's Bell Labs by [Ken Thompson](https://en.wikipedia.org/wiki/Ken_Thompson), [Dennis Ritchie](https://en.wikipedia.org/wiki/Dennis_Ritchie), and others. It was designed to be portable (could be adapted quickly to different hardware), multi-tasking (can run multiple tasks simultaneously), and multi-user (yould be used by multiple people at the same time). Unix was written in a high-level programming language ([C](https://en.wikipedia.org/wiki/C_(programming_language))) which was a revolutionary concept at the time as, until then, operating systems were usually written in [assembly](https://en.wikipedia.org/wiki/Assembly_language) language. This made Unix easy to modify, expand, and port to other machines.
 
@@ -28,29 +40,21 @@ Linux is based on the principles and design of Unix however it is built from scr
 The similarities between Unix and Linux boil down to their shared design philosophies, use of a common command-line interface (CLI), and similar system architecture. However, they differ in their licensing, with Unix often being proprietary and Linux being free and open-source. Both operating systems have had a profound impact on the computing landscape, influencing the development of various systems and applications that we use today.
 
 
-There are many reasons to use the command line (also known as the
-**terminal** or **shell** although these terms actually refer to slightly different things), a set of skills and an approach to data
-analysis at the very heart of bioinformatics. In general you can be sure
-that it is **faster**, more **accurate** (reproducible), and more
-**powerful**. 
+## 1.2 What is the Linux shell?
 
-Today we will learn some of the basics of navigating the
-UNIX-based file system, viewing and searching large data files. You will
-also learn to run shell and python scripts because the shell includes a
-powerful scripting language (BASH). Even these very basic skills will
-give you completely new ways to work and new analytical options,
-although obviously this is just a start. We will be running BioLinux
-which is a very popular distribution based on Ubuntu Linux (Debian) and
-we have pre-installed the additional software required for this course.
+The Linux shell,  allows users to interact with the computer's operating system through text commands also refered to as a command-line interface (CLI). This might seem daunting to novices initially, especially in an era dominated by graphical user interfaces (GUIs) with mouse control. However, the shell is a powerful tool that offers precision, control, and a deeper understanding of how computers work. In its essence it is a programm expecting and executing commands, but it can alsoalso  do a lot more than that. 
 
-Below, and in the course, we will only give a basic overview.
+The Unix operating system, the progenitor to Linux (see above), came with its own shell, the Bourne shell. With time, various other shells were developed, but the most popular in the Linux world is called `Bash`, which stands for 'Bourne Again SHell.' Bash is an enhanced version of the original Bourne shell, incorporating new features and improvements to make it more usable and powerful.
 
-**The best way to learn the command line is to Google search for
-instructions and then try them yourself, experimenting as much as you
-can.**
+Why use the Linux shell? For starters, it's incredibly efficient for repetitive tasks. Complex operations that might require lots of dragging and clicking in a GUI can often be done with a single command. The shell also excels in scriptability; users can write scripts (essentially a list of commands) to automate a wide array of tasks.
 
-## 1.1 Basic concepts and definitions
+The power of the shell comes from its ability to harness the capabilities of the Linux operating system, where even the most fundamental aspects like file management and software installation can be controlled with precision through shell commands. While graphical interfaces provide a user-friendly layer on top, the real machinery that performs the heavy lifting works under those graphical programs, is accessible almost  exclusively through the shell.
 
+Learning to use the Linux shell can seem like learning a new language — because it is. But just as knowing the basics of a language helps in a foreign country, knowing basic shell commands is incredibly beneficial to navigate and utilize the full potential of Linux-based systems. As we make our first steps into this world, after a little practice, we will gain a level of control and efficiency never imagined possible.
+
+## 1.3 Basic concepts and definitions
+
+This introduction includes a large number of examples.
 The \$ symbol in the examples below indicates what is called the [*command prompt*](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt), rather
 than something you type. This may, on some systems be prefixed with additional text, or be formatted differently.\
 You will see something like `symbiont@lichengenomics:\~\$` which refers to the user you are
@@ -70,34 +74,46 @@ The exercises are split into sections of text with explanations of what we are d
 
 ## 1.2 Connecting to remote computers
 
+### Theory: What is SSH?
+
+SSH, or Secure Shell, is a network protocol that allows you to securely access a computer over an unsecured network. Imagine you're in your home, and you want to send a secret message to a friend in a house across the street. Rather than shouting the message out loud where anyone could hear, you use a special secure tunnel that only you and your friend can use. This is what SSH does for computers.
+
+When you use SSH, it's like creating a secure tunnel for your data. You can run commands on a remote computer as if you were sitting right in front of it, even if it's on the other side of the world. This is particularly useful for large-scale data analysis, performing techical tasks, or transferring files securely. To connect to a remote computer with SSH, all you need is the SSH software on your own computer, the remote computer's address, and the appropriate access permissions. With these essentials, SSH ensures that your connection and data stay encrypted and safe from eavesdroppers.
+
 Since we will be analyzing very large datasets, our own laptops and desktop computers typically do not have enought memory or CPU power. Hence we will be working on 
-the University of Graz High-Performance Compute Cluster - [GSC](https://hpc-wiki.uni-graz.at/). Using our UGO Account and passwords you should be able to log in.
+the University of Graz High-Performance Compute Cluster - [GSC](https://hpc-wiki.uni-graz.at/) which we access through SSH. Using our UGO Account and passwords you should be able to log in.
 Open a terminal window on your system and type:
 
 ```
 $ ssh <username>@gsc.uni-graz.at
 <omitted long output here>
 ----------------------------------------------------------------------------------
-Last login: Fri Apr  4 13:29:38 2025 from 143.50.236.165
+Last login: Fri Apr  4 13:29:38 2025 from 142.55.237.189
 username@IT010044: ~ $ 
 ```
 
-This should log you in to the Uni Graz cluster. Mind you that this only works from inside the University network or through a VPN connection.
+Congrats, you have successfully executed your first command line program which should log you in to the Uni Graz cluster. Mind you that this only works from inside the University network or through a VPN connection.
 
 # 2 Basic commands
 
+> [!IMPORTANT]
+> Before you proceed type (or copy-paste) the following text into your shell and hit Return (Enter). This will automatically download the input data for this course.
+> We will discuss later what exactly this command is doing:
+>
+> ```
+> $ git clone https://github.com/reslp/linux-intro.git
+> ```
+
+
 ## 2.1 Navigating the file system
 
-The first thing to do is to learn the basics of moving between
+Once logged in, the first thing to do is to learn the basics of moving between
 directories on your computer, checking where you are, checking what
 files are present and having a quick look at them. Some of the
-terminology is perhaps slightly new ('directories' rather than
-'folders') but using the right words will mean you are speaking the same
+terminology is perhaps slightly new (*directories* rather than
+*folders*) but using the right words will mean you are speaking the same
 language as everyone else and make your life easier when Googling for
 solutions.
-
-**Task:** The navigation commands are introduced below try them on
-your own system
 
 ### 2.1.1 See where you are and how to move between directories
 
@@ -422,10 +438,19 @@ flag (`-c`) with `grep` as follows:
 $ grep --c "RPB1" 18S_parmelia_sequences.fas
 ```
 
+:::{tip}
+test1
+:::
+
+```{tip}
+test2
+```
+
 ### 2.2.4 How many sequences do I have?
 
-A very common question is to ask '**how many sequence records are in
-this enormous fasta file?**' You could of course search for all the
+A very common question to ask is:  *how many sequence records are in
+this enormous fasta file?*  
+You could of course search for all the
 greater than \> symbols, which is almost certainly the number of
 records. However you should really search for all the lines **starting
 with \>** rather than the number of times it occurs, as [[it is possible
