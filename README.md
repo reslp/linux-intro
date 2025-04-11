@@ -438,43 +438,41 @@ flag (`-c`) with `grep` as follows:
 $ grep --c "RPB1" 18S_parmelia_sequences.fas
 ```
 
-:::{tip}
-test1
-:::
-
-```{tip}
-test2
-```
-
 ### 2.2.4 How many sequences do I have?
 
 A very common question to ask is:  *how many sequence records are in
-this enormous fasta file?*  
+this enormous fasta file?*
+
+>[!NOTE]
+>FASTA files are a common text-based files to store nucleotide and amino acid sequences. Look [here](https://en.wikipedia.org/wiki/FASTA_format) for more details. 
+ 
 You could of course search for all the
-greater than \> symbols, which is almost certainly the number of
+greater than `>` symbols, which is almost certainly the number of
 records. However you should really search for all the lines **starting
-with \>** rather than the number of times it occurs, as [[it is possible
-for a fasta header to contain an internal
-\>]{.underline}](https://nsaunders.wordpress.com/2014/08/14/looking-for-in-all-the-wrong-places/)
+with `>`** rather than the number of times it occurs, as [it is possible
+for a fasta header to contain an internal \>](https://nsaunders.wordpress.com/2014/08/14/looking-for-in-all-the-wrong-places/)
 . 'Line starts with' is represented by the \^ symbol.
 
-Task: Try to write a grep search to count the number of fasta header
+### Task
+
+Try to write a grep search to count the number of fasta header
 lines. Google/ask for help. **Have you remembered the quotation marks
 around the search phrase?** Unfortunately your solution will probably
 delete the data file if you forget the quote marks! Why? Discuss
 
-Search the two files scaffold.fas and parmelia_sequences.fas you have
+Search the two files `scaffold.fas` and `parmelia_sequences.fas` you have
 already used to determine the number of sequence records. Make sure to
 discuss your solution.
 
-**Tip**: you can use the up and down arrows to cycle through your
-command history. If you find yourself typing the same command then try
-pressing the up arrow until you reach the command you want. You can
-always edit that command if you need to, perhaps using tab to
-autocomplete a new file name. Use the down arrow to bring back more
-recent commands, and eventually the command line will clear completely,
-i.e. you are back to the present 'no command'. Type history to see a
-list of all your previous commands or Ctrl-R to search them.
+>[!TIP]
+>you can use the up and down arrows to cycle through your
+>command history. If you find yourself typing the same command then try
+>pressing the up arrow until you reach the command you want. You can
+>always edit that command if you need to, perhaps using tab to
+>autocomplete a new file name. Use the down arrow to bring back more
+>recent commands, and eventually the command line will clear completely,
+>i.e. you are back to the present 'no command'. Type history to see a
+>list of all your previous commands or Ctrl-R to search them.
 
 ## 2.3 Search, replace, and write output to a new file
 
@@ -485,100 +483,118 @@ sed or a simple script (OK there are actually numerous ways of doing
 this utilizing other tools but this manual will only deal with *simple*
 examples with sed or python scripts).
 
-### **2.3.1 sed the stream editor**
+### 2.3.1 sed the stream editor
 
-sed works best when we need to deal with files as single lines, or rows
+`sed` works best when we need to deal with files as single lines, or rows
 of text data. Since sed doesn't try to take the whole file into memory,
 instead dealing with a line at a time, it has real advantages when files
 are enormous- as they often are for sequence data.
 
-To search for and replace **RPB1** with **RPB_1** in our
-**parmelia_sequences.fas** file we could do the following:
+To search for and replace `RPB1` with `RPB_1` in our
+`parmelia_sequences.fas` file we could do the following:
 
-\$ sed \'s/RPB1/RPB_1/\' \< parmelia_sequences.fas \> RPB1toRPB_1.fas
+```
+$ sed 's/RPB1/RPB_1/' < parmelia_sequences.fas > RPB1toRPB_1.fas
+```
 
-This will replace the single word **RPB1** we identified using grep with
-the word **RPB_1**, but output these changes to the file
-**RPB1toRPB_1.fas**, leaving the original file unchanged. The s within
-the single quotes signifies this is a [s]{.underline}ubstitution command
+This will replace the single word `RPB1` we identified using grep with
+the word `RPB_1`, but output these changes to the file
+`RPB1toRPB_1.fas`, leaving the original file unchanged. The s within
+the single quotes signifies this is a *substitution* command
 and the / characters are delimiters that separate the text to search
 for, and the text to replace it with. In UNIX based systems the \<
 signifies an input, so we are taking input from our
-**parmelia_sequences.fas** file and outputting (\>) to
-**RPB1toRPB_1.fas**.
+`parmelia_sequences.fas` file and outputting (\>) to
+`RPB1toRPB_1.fas`.
 
-Tip: Always give meaningful names to files and directories, even if that
+ Always give meaningful names to files and directories, even if that
 makes them seem long. The person you are doing this for is 'future you'
 who will remember less than you think, need clear filenames as one of
 the ways to make sense of the data, how it has been transformed, and to
 help record a reproducible experiment. It is very useful to have a
 filename like:
 
+```
 whitby-FDS12763-nematode18S-lenfiltered200bp-uniquespecies.fas
-
+```
 instead of
 
+```
 sequences_2.fas
+```
 
 Another reason the information-in-filename approach is very useful is
 that it contains a lot of information you can use for analysis. If you
 had 1000 files from separate sampling points, you could choose which
 files to pull data from based on names like "whitby" or "FDS". If you
 wanted to grab data just from enoplid nematodes from only the Whitby
-samples you could find and list (con**[cat]{.underline}**enate) those
+samples you could find and list (con*cat*enate) those
 with a search, and pipes \| to string several jobs together. Below is an
 example, these files don't exist here, but you are going to try it
 yourself on files that do.
 
-cat \~/allsamples/\*whitby\*.fas \| grep enoplida \| sort \| uniq -c
+```
+cat ~/allsamples/*whitby*.fas | grep enoplida | sort | uniq -c
+```
 
-**Task:** Google, discuss, and ask until you know what this command
+
+### Task
+
+Google, discuss, and ask until you know what this command
 does. To help your searches the asterisks are called 'unix wildcards'
 -why are they used? Think for a moment how much work this single line is
 actually doing and how long it would take manually?
 
 Above I suggested using the filename
 
-"whitby-FDS12763-nematode18S-lenfiltered200bp-uniquespecies.fas"
+```
+whitby-FDS12763-nematode18S-lenfiltered200bp-uniquespecies.fas
+```
 
 It may seem an annoying amount of typing to write this much information
 in filenames, but it isn't *you* who should be doing the writing, it's
-your script. It\'s a difficult mindset to overcome, but really useful.
+your script. It is a difficult mindset to overcome, but really useful.
 
-**TASK**: Go to the headers directory. Extract all the header lines from
+### Task
+
+Go to the headers directory. Extract all the header lines from
 headers-test.fas and write to a new file with an informative name. How
 many are there? Are there any duplicates or are they all unique (uniq)?
 Now repeat this for all the headers containing 2 separate search terms
 (eg taxon names) that you think of. It doesn't matter what they are. You
 can examine the headers in the file with your new unix skills to get
 inspiration. Extra points if you can do this in one single command.
-[[Answer]{.underline}](https://docs.google.com/document/d/1h9d0JrTsDLzsOV5klMkD47807dWTmcXN3uxoYp0ei64/edit#heading=h.zh5kap4uuux6)
+[[Answer]](https://docs.google.com/document/d/1h9d0JrTsDLzsOV5klMkD47807dWTmcXN3uxoYp0ei64/edit#heading=h.zh5kap4uuux6)
 
-\-**PAUSE HERE-**
 
-### **2.3.2 echo**
+### 2.3.2 echo
 
 A useful way to write to a text file is with echo. This will print to
-the screen or a file. Here is a [[short
-introduction]{.underline}](http://www.computerhope.com/unix/uecho.htm)
+the screen or a file. Here is a [short
+introduction](http://www.computerhope.com/unix/uecho.htm)
 to echo if you need it, although the next sections are fairly self
 explanatory without it.
 
+>[!TIP]
+> Or use `man echo`
+
 Try these commands
 
-\$ echo Hello world!
+```
+$ echo Hello world!
+$ echo 'Hello world!' > greeting.txt
+```
 
-\$ echo 'Hello world!' \> greeting.txt
-
-If the file greeting.txt does not exist it will be created. If it does
+If the file `greeting.txt` does not exist it will be created. If it does
 exist it will be overwritten. Check the file now exists (how?), then you
 can use one of the commands above (cat maybe? Do you remember the
 others?) to inspect the file you have just created. If you wish to
 append text to a file rather than replace it you can use the \>\>
 symbol:
 
-\$ echo 'Hello again world!' \>\> greeting.txt
-
+```
+$ echo 'Hello again world!' >> greeting.txt
+```
 Try this and check your success. Routing syntax (\>, \>\>) is general to
 UNIX and can be used with other programs too. Imagine that you need to
 add an extra fasta sequence to the end of a big sequence file, the
@@ -587,89 +603,94 @@ the input source? Can you think of any situations in your work where
 this UNIX command line approach could save an enormous amount of work in
 manipulating files?
 
-echo also allows us to format files correctly if we need newlines or
-tabs inserted by using the -e flag. The tab symbol is \\t and newline
+`echo` also allows us to format files correctly if we need newlines or
+tabs inserted by using the `-e` flag. The tab symbol is \\t and newline
 \\n.
 
-Can you use these to better format greeting.txt?
+Can you use these to better format `greeting.txt`?
 
 Try to imagine what the following command will write & discuss with
 others:
 
-\$ echo -e "column1\\tcolumn2\\nRNA\\tDNA" \> rna-dna-columns.txt
+```
+$ echo -e "column1\tcolumn2\nRNA\tDNA" > rna-dna-columns.txt
+```
+
 
 Check your success. These commands are useful when writing a lot of data
 to a file programmatically, and when format such as having a defined
-number of columns or lines is important, which is a [very]{.underline}
-common situation for bioinformatics work. **Remember this example.** You
-will use echo to create one of these files tomorrow.
+number of columns or lines is important, which is a *very*
+common situation for bioinformatics work.  
+**Remember this example.**   
+You will use echo to create one of these files tomorrow.  
 
 A common bioinformatics task is to concatenate a lot of individual
 sequence files into one single file. This is very time consuming to do
 in a GUI if you have more than a couple of files to open, copy, close,
-open, paste. The task at the command line however **scales** easily from
+open, paste. The task at the command line however *scales* easily from
 1 to 1 million files. You already have all the skills to do this.
 
-**Task:** go to the day-1/fasta-to-combine directory. Concatenate all 10
+
+### Task
+
+Go to the day-1/fasta-to-combine directory. Concatenate all 10
 sequence files into a new file with an informative name. Do not add the
-contents of the readme.txt file. Demonstrate your success.
+contents of the `readme.txt` file. Demonstrate your success.
 
 Lastly echo can write file information like file names
 
-\$ echo \*.fas \> fasta-file-names.txt
+```
+$ echo *.fas > fasta-file-names.txt
+```
 
 This would write the name of every file in the current directory with a
-.fas extension to a file called fasta-file-names.txt which is often very
+`.fas` extension to a file called `fasta-file-names.txt` which is often very
 useful when you need to record lots of output file information.
 
-By this stage you have done a lot of work, and learned a lot. Take a
-break and check before proceeding.
+## 2.4 Combining multiple commands into scripts
 
-## **2.4 Combining multiple commands into scripts**
-
-### **2.4.1 Text-processing scripts**
+### 2.4.1 Text-processing scripts
 
 Often you will wish to do more complex tasks of manipulating text files.
 These are best done with simple scripts and most bioinformaticians would
 use a python script to do these sorts of tasks. Learning python is not
 part of this tutorial (even though we run many python scripts) but there
 are many free online courses if you wish to improve your knowledge (e.g.
-[[pythonforbiologists.com]{.underline}](http://pythonforbiologists.com/)
+[pythonforbiologists.com](http://pythonforbiologists.com/)
 Google for many, many more).
 
-You have a file **example-rna.fas** in the
-/data/exercise-0/backtranscribe directory which holds [[fasta
-format]{.underline}](http://drive.google.com/open?id=1SE1YxDwsLmndZX8DgBx2jq8RPk1yRb2aJOqk7cUm0Ys)
+You have a file `example-rna.fas` in the
+`/data/exercise-0/backtranscribe` directory which holds [fasta
+format](http://drive.google.com/open?id=1SE1YxDwsLmndZX8DgBx2jq8RPk1yRb2aJOqk7cUm0Ys)
 RNA sequences. You need to change these sequences to DNA. You could
 search and replace U with T using sed as above (try to write this
 command for yourself). Unfortunately that will change every U to a T in
 the sequence headers too. Instead a simple, but much more flexible and
 intelligent, python script could be used,. This has been written for you
-called **RNAtoDNA.py**
+called `RNAtoDNA.py`
 
-### **2.4.2 Python scripts**
+### 2.4.2 Python scripts
 
-**Task:** navigate to the correct directory and identify the python
-script. Instructions are in the [[Navigating the File
-System]{.underline}](#navigating-the-file-system) section above if you
+### Task
+
+Navigate to the correct directory and identify the python
+script. Instructions are in the [Navigating the File
+System](#navigating-the-file-system) section above if you
 have forgotten.
 
-Have a look at this RNAtoDNA.py file using your new command line skills
-(see [[Displaying and searching within text
-files]{.underline}](https://docs.google.com/document/d/1h9d0JrTsDLzsOV5klMkD47807dWTmcXN3uxoYp0ei64/edit#heading=h.2ovabtywxqfl)
-if you have forgotten). You won't understand everything, that's OK
-you're not supposed to. Have a quick guess what some parts might mean
-and then read on.
+Have a look at this `RNAtoDNA.py` file using your new command line skills
+(see above if you have forgotten). If you don't understand everything, that's OK.
+Have a quick guess what some parts might mean and then read on.
 
 Comment lines begin with a hash \# symbol. These are just for humans to
 read, they are ignored when the script is executed (run). Scripts with
 lots of comments are much easier to understand and you should use them
 yourself when you write or modify a script.
 
-If you are familiar with [[fasta format
-files]{.underline}](http://drive.google.com/open?id=1SE1YxDwsLmndZX8DgBx2jq8RPk1yRb2aJOqk7cUm0Ys),
-and wanted to turn RNA sequences into DNA, you could probably write some
-[[pseudocode]{.underline}](https://en.wikipedia.org/wiki/Pseudocode)
+You are already familiar with [fasta format
+files](https://en.wikipedia.org/wiki/FASTA_format). Given a fasta file containing RNA sequences, how can you convert them into DNA?  
+Cou could probably write some
+[pseudocode](https://en.wikipedia.org/wiki/Pseudocode)
 quite quickly, and one version could look like this:
 
 -   Open the input data file containing RNA sequence
@@ -694,37 +715,39 @@ Now read the python script again, is it more understandable? Some parts
 may not be obvious, but it\'s generally like the pseudocode above.
 Discuss the script with someone.
 
-**Task:** Create a new DNA fasta file from the file transcripts.fas
+### Task
+Create a new DNA fasta file from the file `transcripts.fas`
 provided in this directory.
 
 In order to run a program or script we specify the program to be run
-(python) and the file to be executed (RNA2DNA.py).
+(python) and the file to be executed (`RNA2DNA.py`).
 
-\$ python RNA2DNA.py
+```
+$ python RNA2DNA.py
+```
 
 First figure out how to run the script to produce a DNA file. Next,
 google how to rename files at the unix command line, and rename the
-newly created file to "new-dna.fas" or something even more informative.
+newly created file to `new-dna.fas` or something even more informative.
 NB remember spaces in filenames cause troubles at the command line,
 that's why dashes or underscores are commonly used.
 
-**You have understood and run a python script in a unix shell, to
-reformat nucleotide sequence data. Our work here is done, you are now a
-bioinformatician, shake hands, welcome to the club!**
+>[!NOTE]
+>You have understood and run a python script in a unix shell, to
+>reformat nucleotide sequence data. Our work here is done, you are now a
+>bioinformatician, shake hands, welcome to the club!
 
-### **2.4.3 Shell scripts- collecting together lots of commands**
+### 2.4.3 Shell scripts- collecting together lots of commands
 
 Similar to python scripts, the UNIX based shell allows us to execute
-**shell scripts**, which usually have the .sh extension. Shell scripts
+*shell scripts*, which usually have the .sh extension. Shell scripts
 are a powerful way to link together lots of different commands and then
 execute (run) them all at once. Below is a walk-through demonstrating a
 shell script.
 
-In our **day-1** directory we have a shell script: **readmap_all.sh**
+In our *day-1* directory we have a shell script: `readmap_all.sh`
 
-1.  
-
-Its very easy to get lost or panic in the next paragraphs. Don't panic!
+Its very easy to get lost or panic in the next paragraphs. *Don't panic!*
 Just skim this section and ask someone. It\'s a deliberately complex
 example, the point of this exercise is not that you read in detail,
 understand exactly, and remember every detail. It is to give you an idea
@@ -733,53 +756,51 @@ that
 By doing a cat readmap_all.sh we can view the content of this file on
 screen.
 
-The first line (#!/bin/bash) is what we call the *shebang* line and
+The first line (`#!/bin/bash`) is what is called the *shebang* line and
 points to the location of the shell program we wish to use when
 executing the program. Any other **lines that begin with a hash (#) are
 comment lines** and are ignored by the shell. Comment lines can help in
 describing what each part does and are therefore very useful to remind
 yourself, and others, what the script was intending to do.
 
-The first command executed is cd trimmed_reads which changes the
-directory to trimmed_reads. It then immediately executes files=\$(ls
-renamed\_\*R1\*). This lists all the files which have renamed\_\*R1\* in
+The first command executed is `cd trimmed_reads` which changes the
+directory to `trimmed_reads`. It then immediately executes `files=$(ls renamed\_\*R1\*)`.
+This lists all the files which have `renamed_*R1*` in
 their filenames and saves the list of filenames to the variable named
 files. The stars sign (\*) is a placeholder. It means any character(s).
 Next there is another cd command which makes the script jump back to the
 previous directory. The command echo "Building index file:" outputs this
 message to the screen. The next line is another comment . The command
-bowtie2-build
-\~/data/peltigera/Peltigera_membranacea/additional_data/Pmem_fungal_scaffolds_DNA_cleaned-up/Pmem_mycobiont_scaffold_1line.fasta
-./02_bowtie/Pmem_fungal_index.build calls the program bowtie2-build. The
-bowtie2 software is used to align (map) short sequences, usually reads
-to much longer sequences such as assemblies. This prcoess is called read
-mapping. The purpose of this can be manifold. For example read mapping
+`bowtie2-build ~/data/peltigera/Peltigera_membranacea/additional_data/Pmem_fungal_scaffolds_DNA_cleaned-up/Pmem_mycobiont_scaffold_1line.fasta ./02_bowtie/Pmem_fungal_index.build` calls the program `bowtie2-build`. The
+`bowtie2` software is used to [align (map)](https://en.wikipedia.org/wiki/Sequence_alignment) short sequences, usually reads
+to much longer sequences such as assemblies. This process is called *read
+mapping*. The purpose of this can be manifold. For example read mapping
 is needed if you want to dected SNPs or look at expression level
 differences in RNASeq experiments. Of course there are many other
 applications for read mappping.
 
-#### experiments. Of course there are many other applications in which read mapping plays an important role. Read mapping with bowtie involves several steps. In the first step bowtie2-build takes a reference genome against which short reads will later be mappend. In the process it creates an index file containing information used by the actual bowtie2 aligner. The line echo "building index done" will inform us that the index file was successfully built. The next two lines create two additional variables: samfile_base=pmem_readmap\_ and counter=0. The samfile_base variable is used as a prefix for the new file which will be created during the rest of the shell script. You may have already guessed that this script was written to automatize readmapping for many sequenced libraries against one reference genome. The actual mapping takes place in the next few file. Since we want to do this many times we use a for loop. This loop will repeat the commands between the do and done statement for a specific number of times. In this case it is done for the number of files in the \$files variable which we created earlier. Inside the for loop , the first thing which is done here is to assign several new variables containing the file paths which should be mapped. Can you guess what the sed command in the script does? The file names \$d and \$d2 are then displayed on screen with echo. In the following line the counter variable is increase by 1: ((++counter)). After that a new variable is defined. Can you guess what this variable may contain?
+The line `echo "building index done"` will inform us that the index file was successfully built. The next two lines create two additional variables: `samfile_base=pmem_readmap_` and `counter=0`. The `samfile_base` variable is used as a prefix for the new file which will be created during the rest of the shell script.
 
-The next command calls bowtie2 to map the reads in the read files
-against the reference: bowtie2 -p 24 -q \--phred33 \--fr -x
-./02_bowtie/Pmem_fungal_index.build -1 \$name1 -2 \$name2 -S
-./02_bowtie/\$samfile.sam. It uses many of the variables created
+You may have already guessed that this script was written to automatize readmapping for many sequenced libraries against one reference genome. The actual mapping takes place in the next few file. Since we want to do this many times we use a for loop. This loop will repeat the commands between the do and done statement for a specific number of times. In this case it is done for the number of files in the `$files` variable which we created earlier. Inside the `for` loop , the first thing which is done here is to assign several new variables containing the file paths which should be mapped. Can you guess what the `sed` command in the script does? The file names `$d` and `$d2` are then displayed on screen with `echo`. In the following line the counter variable is increase by 1: `((++counter))`. After that a new variable is defined. Can you guess what this variable may contain?
+
+The next command calls `bowtie2` to map the reads in the read files
+against the reference: `bowtie2 -p 24 -q --phred33 --fr -x ./02_bowtie/Pmem_fungal_index.build -1 $name1 -2 $name2 -S ./02_bowtie/$samfile.sam`.
+ It uses many of the variables created
 earlier, so hopefully now it gets more clear why we need them. The next
 command is another echo command which tells us that the bowtie command
-is finished. bowtie2 creates a socalled SAM file which contains
+is finished. `bowtie2` creates a socalled SAM file which contains
 informations about the mapped reads such as the name of the read, the
 sequence and the mapping coordinates. SAM files are text format files
 and you could theoretically look at them with cat although this may not
 be a good idea because SAM files can get very large. This is why we have
 to compress them into a compressed binary format. Compressed SAM files
-are called BAM files and we compress SAM files like this: samtools view
--bS ./02_bowtie/\$samfile.sam \| samtools sort - ./02_bowtie/\$samfile
+are called BAM files and we compress SAM files like this: `samtools view -bS ./02_bowtie/$samfile.sam | samtools sort - ./02_bowtie/$samfile`
 and work only with the compressed files. The next line only has the done
 command which indicates the end of the for loop. After the loop has
 finished the last few lines of code will combine all just created BAM
 files into a single file sort the file and creates an index file.
 
-#### **2.4.3.1 The point of scripts - power, speed, reproducibility**
+#### 2.4.3.1 The point of scripts - power, speed, reproducibility
 
 I hope you can see that this shell script has done a lot of complex work
 at once. Entering all these commands with the correct flags and file
@@ -803,59 +824,57 @@ analysis on their data. Or better yet add your analysis script to the
 massive number already available online for all to use without
 restriction.
 
-**I hope you can see the reasons that bioinformaticians, and most modern
-biologists working with lots of data, use the command line and scripts
-rather than proprietary GUI programs.**
+>[!NOTE]
+>I hope you can see the reasons that bioinformaticians, and most modern
+>biologists working with lots of data, use the command line and scripts
+>rather than proprietary GUI programs.**
 
-## **2.6 Tasks- review of command line skills**
+## 2.6 Tasks- review of command line skills
 
 Use the skills you have learned to answer the questions below. The
 information you need is in the sections above but this is 'open book',
 you can use the internet just like a proper bioinformatician.
 
-1.  How many tef1 sequences are there in the parmelia_sequences.fas?
+1.  How many `tef1` sequences are there in the `parmelia_sequences.fas`?
 
 2.  What is the last sequence record? (No scrolling down please!)
 
-3.  Search for beta-tubulin and replace it with Btub
+3.  Search for `beta-tubulin` and replace it with Btub
 
 4.  Demonstrate that you can (a) edit the file directly (b) save the
     edit as a new file
 
-5.  
-
-## 3 Additional reading
+# 3 Additional reading
 
 1.  UNIX Tutorial for Beginners
-    [[http://www.ee.surrey.ac.uk/Teaching/Unix/]{.underline}](http://www.ee.surrey.ac.uk/Teaching/Unix/)
+    [http://www.ee.surrey.ac.uk/Teaching/Unix/](http://www.ee.surrey.ac.uk/Teaching/Unix/)
 
 2.  Command line history tricks
-    [[http://www.thegeekstuff.com/2008/08/15-examples-to-master-linux-command-line-history/]{.underline}](http://www.thegeekstuff.com/2008/08/15-examples-to-master-linux-command-line-history/)
+    [http://www.thegeekstuff.com/2008/08/15-examples-to-master-linux-command-line-history/](http://www.thegeekstuff.com/2008/08/15-examples-to-master-linux-command-line-history/)
 
-3.  Software Carpentry Introduction to the unix shell o[[n
-    YouTube]{.underline}](https://www.youtube.com/results?search_query=software+carpentry+September+2012+unix+shell)
+3.  Software Carpentry Introduction to the unix shell [on
+    YouTube](https://www.youtube.com/results?search_query=software+carpentry+September+2012+unix+shell)
     (great short videos)
 
 4.  Unix and Perl Primer for Biologists
-    [[http://korflab.ucdavis.edu/Unix_and_Perl/unix_and_perl_v3.0.pdf]{.underline}](http://korflab.ucdavis.edu/Unix_and_Perl/unix_and_perl_v3.0.pdf)
+    [http://korflab.ucdavis.edu/Unix_and_Perl/unix_and_perl_v3.0.pdf](http://korflab.ucdavis.edu/Unix_and_Perl/unix_and_perl_v3.0.pdf)
 
 5.  Bradnam and Korf. (2012) UNIX and Perl to the Rescue!: A Field Guide
     for the Life Sciences (and Other Data-rich Pursuits). ISBN-10:
     0521169828 ISBN-13: 978-0521169820
-    [[http://www.amazon.co.uk/gp/product/0521169828]{.underline}](http://www.amazon.co.uk/gp/product/0521169828)
+    [http://www.amazon.co.uk/gp/product/0521169828](http://www.amazon.co.uk/gp/product/0521169828)
 
 6.  GREP
-    [[http://www.gnu.org/software/grep/manual/grep.html]{.underline}](http://www.gnu.org/software/grep/manual/grep.html)
+    [http://www.gnu.org/software/grep/manual/grep.html](http://www.gnu.org/software/grep/manual/grep.html)
 
 7.  SED
-    [[http://www.gnu.org/software/sed/manual/sed.html]{.underline}](http://www.gnu.org/software/sed/manual/sed.html)
+    [http://www.gnu.org/software/sed/manual/sed.html](http://www.gnu.org/software/sed/manual/sed.html)
 
-8.  Software Carpentry Introduction to programming in Python ([[great
-    short YouTube
-    videos]{.underline}](https://www.youtube.com/results?search_query=software+carpentry+September+2012+python))
+8.  Software Carpentry Introduction to programming in Python ([great
+    short YouTube videos](https://www.youtube.com/results?search_query=software+carpentry+September+2012+python))
 
 9.  Python for Biologists
-    [[http://pythonforbiologists.com]{.underline}](http://pythonforbiologists.com)
+    [http://pythonforbiologists.com](http://pythonforbiologists.com)
 
 10. Python for non-programmers
-    [[https://wiki.python.org/moin/BeginnersGuide/NonProgrammers]{.underline}](https://wiki.python.org/moin/BeginnersGuide/NonProgrammers)
+    [https://wiki.python.org/moin/BeginnersGuide/NonProgrammers](https://wiki.python.org/moin/BeginnersGuide/NonProgrammers)
