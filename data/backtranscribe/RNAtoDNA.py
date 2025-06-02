@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python3
 # written by Philipp Resl
 # this script converts RNA to DNA sequences
 
@@ -24,9 +23,9 @@ RNASequencefile = open(FileName, "r")
 
 for line in RNASequencefile: # loop through all the lines in the file
 	if line.startswith(">"):
-		print line.strip()
+		print(line.strip())
 	else:
 		line = line.replace("U","T") # replace all Us for Ts
-		print line.strip()
+		print(line.strip())
 
 RNASequencefile.close() #close the file
