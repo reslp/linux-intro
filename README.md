@@ -96,7 +96,7 @@ Congrats, you have successfully executed your first command line program which s
 
 # 2 Basic commands
 
->[!IMPORTANT]
+>[!CAUTION]
 >Before you proceed type (or copy-paste) the following text into your shell and hit Return (Enter). This will automatically download the input data for this course.
 >We will discuss later what exactly this command is doing:
 >```
@@ -140,18 +140,18 @@ $ pwd
 ```
 
 But maybe that isn't where you want to be, in which case you need to
-'[c]{.underline}hange [d]{.underline}irectory' and the command for that
+`change directory` and the command for that
 is cd.
 
 ```
-$ cd genomics_course
+$ cd linux-intro
 $ cd data
 $ pwd
-/home/symbiont/genomics_course/data
+/home/symbiont/linux-intro/data
 ```
 
 You can see that the / symbol denotes levels of directories, so that
-`data` directory is contained within the `genomics_course` directory
+`data` directory is contained within the `linux-intro` directory
 which is within the `symbiont` user home directory in the system's
 `home` directory. These *file paths* can be long sometimes but they are
 always explicit, which is a very good thing for reproducibility. There
@@ -166,7 +166,7 @@ between the cd command and the directory you wish to go to).
 ```
 $ cd ..
 $ pwd
-/usr/people/genomics_course/
+/usr/people/linux-intro/
 ```
 
 What happens if you use the cd command without telling the system where
@@ -183,7 +183,7 @@ Using cd command on its own returns you to your user's home directory,
 in this case `/usr/people/symbiont` from wherever you are.
 
 The tilde symbol (**\~**) is shorthand for this home directory so
-`/home/symbiont/genomics_course` and `~/genomics_course` refer to the same
+`/home/symbiont/linux-intro` and `~/linux-intro` refer to the same
 directory, which saves a little typing.
 
 The exact location of your home directory will depend on the flavor of Linux/Unix you are using.
@@ -195,15 +195,15 @@ to swap between directories that are separated by several levels or that
 have long names.
 
 ```
-$ cd ~/genomics_course/data
+$ cd ~/linux-intro/data
 $ pwd
-/usr/people/username/genomics_course/data
+/usr/people/username/linux-intro/data
 $ cd
 $ pwd
 /usr/people/username
 $ cd -
 $ pwd
-/usr/people/username/genomics_course/data
+/usr/people/username/linux-intro/data
 $ cd -
 $ pwd
 /usr/people/username
@@ -229,7 +229,7 @@ however we like to build anything we want. Simple units, building
 complex and impressive outcomes.
 
 We have prepared example data to be used in the following exercises in a
-directory on your computer - `EXAMPLE DATA PATH`.
+directory on your computer - `linux-data/`.
 
 Navigate to this directory and then confirm that you are in the right
 place by printing the working directory path to your screen. Then go
@@ -301,8 +301,6 @@ $ man man
 **Googling is not cheating**, it is a great way to learn and is highly
 recommended.
 
-ADD SMALL NAVIGATION EXERCISE
-
 How would you do this on a single line command? Show that it works
 
 ### 2.1.3 Some things you will have noticed 
@@ -330,7 +328,7 @@ letters. It will also autocomplete the portion of the file or directory
 name that is shared between them all and wait for you to type more and
 hit tab again.
 
-Try it now. Navigate to `genomics_course/raw_data/` and list the files
+Try it now. Navigate to `linux-intro/raw_data/` and list the files
 present. You should have explored using tab to autocomplete the
 directory names at every level. If not quickly jump back using `cd -` and
 try again.
@@ -404,7 +402,7 @@ efficient for viewing large files such as these.
 **TASK:** All these commands will be useful for you during this course.
 You should now try using less, head, tail and cat to practice seeing the
 text file `parmelia_sequences.fas` which can be found in
-`~/raw_data/fasta/`. Are you using ls to see what is available and tab to
+`~/linux-intro/raw_data/fasta/`. Are you using ls to see what is available and tab to
 complete the filename? How can you step through the file a screen at a
 time using less? Try Googling for the answer and demonstrate that it
 works.
@@ -426,7 +424,7 @@ where (the filename) to look for it. For example, to search for the word
 RPB1in our `parmelia_sequences.fas` file we do the following:
 
 ```
-$ grep "RPB1" 18S_parmelia_sequences.fas
+$ grep "RPB1" parmelia_sequences.fas
 ```
 This returns all the lines containing the word *RPB1*.
 
@@ -434,7 +432,7 @@ We can count how many of the sequences are RPB1 by using the *count*
 flag (`-c`) with `grep` as follows:
 
 ```
-$ grep --c "RPB1" 18S_parmelia_sequences.fas
+$ grep --c "RPB1" parmelia_sequences.fas
 ```
 
 ### 2.2.4 How many sequences do I have?
@@ -632,7 +630,7 @@ open, paste. The task at the command line however *scales* easily from
 
 ### Task
 
-Go to the day-1/fasta-to-combine directory. Concatenate all 10
+Go to the linux-intro/data/fasta-to-combine directory. Concatenate all 10
 sequence files into a new file with an informative name. Do not add the
 contents of the `readme.txt` file. Demonstrate your success.
 
@@ -659,7 +657,7 @@ are many free online courses if you wish to improve your knowledge (e.g.
 Google for many, many more).
 
 You have a file `example-rna.fas` in the
-`/data/exercise-0/backtranscribe` directory which holds [fasta
+`linux-intro/data/backtranscribe` directory which holds [fasta
 format](http://drive.google.com/open?id=1SE1YxDwsLmndZX8DgBx2jq8RPk1yRb2aJOqk7cUm0Ys)
 RNA sequences. You need to change these sequences to DNA. You could
 search and replace U with T using sed as above (try to write this
@@ -744,7 +742,7 @@ are a powerful way to link together lots of different commands and then
 execute (run) them all at once. Below is a walk-through demonstrating a
 shell script.
 
-In our *day-1* directory we have a shell script: `readmap_all.sh`
+In our *linux-intro/data* directory we have a shell script: `readmap_all.sh`
 
 Its very easy to get lost or panic in the next paragraphs. *Don't panic!*
 Just skim this section and ask someone. It\'s a deliberately complex
@@ -752,7 +750,7 @@ example, the point of this exercise is not that you read in detail,
 understand exactly, and remember every detail. It is to give you an idea
 that
 
-By doing a cat readmap_all.sh we can view the content of this file on
+By doing a `cat readmap_all.sh` we can view the content of this file on
 screen.
 
 The first line (`#!/bin/bash`) is what is called the *shebang* line and
