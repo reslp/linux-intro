@@ -118,7 +118,7 @@ At the command line you need to know "where you are" i.e. which
 directory you have open and are working in. Question: If you
 issue the command to 'list all files' which files will be listed?
 Answer: Those in the folder where you are currently working, called the
-[working directory]{.underline}. 
+*working directory*. 
 
 The command to find out where you are
 is `pwd` short for *print working directory*. 
@@ -139,7 +139,7 @@ $ pwd
 
 But maybe that isn't where you want to be, in which case you need to
 `change directory` and the command for that
-is cd.
+is `cd`.
 
 ```
 $ cd linux-intro
@@ -159,7 +159,7 @@ part of your experiment.
 
 You can go up one level (to the directory containing your current
 working directory) by using double dots (ensure there is always a space
-between the cd command and the directory you wish to go to).
+between the `cd` command and the directory you wish to go to).
 
 ```
 $ cd ..
@@ -189,7 +189,7 @@ On Apple MacOS, for example, it would be something like `/Users/username`.
 
 Another very useful shortcut is `cd -` (dash) which takes you to the
 previous directory that you were in. This is really useful when you need
-to swap between directories that are separated by several levels or that
+to move directly between directories that are separated by several levels or that
 have long names.
 
 ```
@@ -219,11 +219,11 @@ ie `cd;pwd`.
 Try the exercise above again but using semicolons. You should now only
 need 4 commands not 8.
 
-One of the underlying principles of UNIX type operating systems is that
-every item should do one thing (and one thing only, but this very well) and that we can
-easily join these items together (usually with `;` or a pipe `|` described
-later). Think of it like a set of lego blocks that we may put together
-however we like to build anything we want. Simple units, building
+One of the underlying principles of UNIX type operating systems (also called the [UNIX philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)) is that
+every program should do one thing (but this very well) and that it should be easy to
+join them together (usually with `;` or a pipe `|` described
+later). Think of it like a set of lego blocks that we may put together so we
+can build anything we want. Simple units, building
 complex and impressive outcomes.
 
 We have prepared example data to be used in the following exercises in a
@@ -243,7 +243,7 @@ directory. Try each to show that they work and discuss with others,
 most people only get 2 or 3.
 
 <details>
-  <summary>Solution: Five ways to return home</summary>
+  <summary>**Solution:** Five ways to return home</summary>
 
   ```
   $ cd /usr/people/username
