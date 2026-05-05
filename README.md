@@ -262,9 +262,7 @@ directories) in your working directory using the ls command. For this
 exercise we will be using the raw data folder.
 
 >[!CAUTION]
->Spaces in file and directory names cause difficulties as the shell
-treats spaces as the end of a file name. When looking for `my file` it
-complains that it can't find `my`.
+>Spaces in file and directory names cause difficulties as the shell treats spaces as the end of a file name. When looking for `my file` it complains that it can't find `my`.
 
 Look here:
 ```
@@ -280,7 +278,7 @@ concatenating the words (e.g. `myfile`) are usually better ways to work.
 $ ls
 ```
 
-Try listing files in long format.
+**Exercise:** List files in long format.
 
 >[!TIP]
 >You can Google to find out what all the data listed means, or better use the built in manual (`man`) pages.
@@ -299,12 +297,11 @@ $ man man
 **Googling is not cheating**, it is a great way to learn and is highly
 recommended.
 
-How would you do this on a single line command? Show that it works
 
 ### 2.1.3 Some things you will have noticed 
 
-Firstly, you have to type very carefully, any typo and you
-will get an error that the file or directory doesn't exist, e.g:
+Firstly, you have to type very carefully, any typo 
+will result in an error saying that the file or directory doesn't exist, e.g:
 
 ```
 $ cd dayy-1
