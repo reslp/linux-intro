@@ -299,7 +299,56 @@ $ man man
 **Googling is not cheating**, it is a great way to learn and is highly
 recommended.
 
-### 2.1.3 Some things you will have noticed 
+### 2.1.3 Copying and moving files with `cp` and `mv`
+
+Once you know how to navigate between directories and list their
+contents, the next common task is to copy or rename files. In biology we
+very often want to keep an original data file unchanged while making a
+working copy for practice or further analysis.
+
+The command `cp` means **copy**. It takes a source file and creates a
+second file with a new name or in a new location.
+
+```
+$ cd ~/linux-intro/data
+$ cp scaffold.fas scaffold_copy.fas
+$ ls
+```
+
+After this command both files exist: the original `scaffold.fas` and the
+new copy `scaffold_copy.fas`.
+
+The command `mv` means **move**. It is used both for moving a file to a
+new directory and for renaming a file.
+
+```
+$ mv scaffold_copy.fas scaffold_practice.fas
+$ ls
+```
+
+Here the file stayed in the same directory, so `mv` simply renamed it.
+If we give a different destination path, the file is moved there:
+
+```
+$ mv scaffold_practice.fas ~/
+$ ls ~
+```
+
+Now `scaffold_practice.fas` is no longer in `~/linux-intro/data`; it has
+been moved to your home directory.
+
+>[!CAUTION]
+>`cp` creates a second copy of a file. `mv` does not: it relocates or renames the existing file.
+
+>[!NOTE]
+>To copy a whole directory and everything inside it you need the recursive flag `-r`, for example `cp -r fasta-to-combine fasta-to-combine-copy`.
+
+**Exercise:** Copy the file `scaffold.fas` to a new file called
+`scaffold_backup.fas`. Then rename that new file to
+`scaffold_backup_renamed.fas`. Finally move it to your home directory.
+Use `ls` to confirm at each step what happened.
+
+### 2.1.4 Some things you will have noticed 
 
 Firstly, you have to type very carefully, any typo 
 will result in an error saying that the file or directory doesn't exist, e.g:
@@ -551,7 +600,85 @@ in filenames, but it isn't *you* who should be doing the writing, it's
 your script. It is a different mindset, but really useful.
 
 
-### 2.3.2 echo
+### 2.3.2 Additional useful commands: `cut`, `sort`, and `uniq` and how to combine them
+
+There are many small UNIX tools that become very powerful when we join
+them together. Three especially useful commands are `cut`, `sort`, and
+`uniq`.
+
+- `cut` extracts part of each line
+- `sort` puts lines in order
+- `uniq` collapses repeated neighbouring lines
+
+To join commands together we use a **pipe**, written as `|`.
+A pipe takes the output of the command on the left and sends it directly
+into the command on the right. This lets us build small workflows from
+simple commands.
+
+For example:
+
+```
+$ grep '^>' parmelia_sequences.fas | cut -d ' ' -f 2
+```
+
+Here `grep` first finds all FASTA header lines, and the pipe sends those
+lines to `cut`. Then `cut` extracts the second space-separated field
+from each header line.
+
+To demonstrate these commands we will work with the FASTA header lines
+from `~/linux-intro/data/raw_data/fasta/parmelia_sequences.fas`.
+First, let us display only the header lines:
+
+```
+$ cd ~/linux-intro/data/raw_data/fasta
+$ grep '^>' parmelia_sequences.fas
+```
+
+Each of these header lines contains pieces of information in square
+brackets such as `[gene=mcm7]` or `[protein=beta-tubulin]`.
+
+The `cut` command can split each line at a chosen delimiter and keep
+only one field. For example, if we split at ` ` (space) and keep field 2, we get
+just the first annotation block from each header:
+
+```
+$ grep '^>' parmelia_sequences.fas | cut -d ' ' -f 2
+```
+
+Now we can sort these annotations and count how often each one occurs:
+
+```
+$ grep '^>' parmelia_sequences.fas | cut -d ' ' -f 2 | sort | uniq -c
+```
+
+You can read this command from left to right:
+
+1. `grep '^>' parmelia_sequences.fas` finds all header lines
+2. `cut -d ' ' -f 2` keeps only the second field
+3. `sort` puts identical entries next to each other
+4. `uniq -c` merges identical neighbouring lines and counts them
+
+This tells us how many sequence headers contain each first annotation.
+You should see entries such as `gene=mcm7`, `gene=RPB1`, and
+`protein=beta-tubulin`.
+
+>[!NOTE]
+>`uniq` only merges identical lines that are next to each other, which is why it is very often used after `sort`.
+
+This is a good example of the UNIX philosophy again: each command does a
+small job, but together they let us answer a useful biological
+question.
+
+### Task
+
+Use `grep`, `cut`, `sort`, and `uniq` on
+`parmelia_sequences.fas` to answer the following:
+
+1. How many headers have `gene=mcm7` as their first annotation?
+2. How many have `protein=beta-tubulin`?
+3. Can you modify the command so that the most common annotation appears at the bottom of the list?
+
+### 2.3.3 echo
 
 A useful way to write to a text file is with echo. This will print to
 the screen or a file. Here is a [short
@@ -630,7 +757,7 @@ This would write the name of every file in the current directory with a
 `.fas` extension to a file called `fasta-file-names.txt` which is often very
 useful when you need to record lots of output file information.
 
-## 2.4 Combining multiple commands into scripts
+## 2.4 Combining multiple commands
 
 ### 2.4.1 Text-processing scripts
 
