@@ -229,9 +229,11 @@ complex and impressive outcomes.
 We have prepared example data to be used in the following exercises in a
 directory on your computer - `linux-data/`.
 
+**Excercise**:
+
 Navigate to this directory and then confirm that you are in the right
 place by printing the working directory path to your screen. Then go
-back to your home directory before returning to the directory above
+back to your home directory before returning to the directory above yet 
 again to practice your new skills. Test yourself first, but it's OK to
 review different ways to do this again from the manual above. Looking
 things up is not cheating.
@@ -243,7 +245,7 @@ directory. Try each to show that they work and discuss with others,
 most people only get 2 or 3.
 
 <details>
-  <summary>**Solution:** Five ways to return home</summary>
+  <summary><b>Solution:</b> Five ways to return home</summary>
 
   ```
   $ cd /usr/people/username
@@ -278,7 +280,7 @@ concatenating the words (e.g. `myfile`) are usually better ways to work.
 $ ls
 ```
 
-**Exercise:** List files in long format.
+**Exercise:** List files in long format. This requires changing the *behavior* of the command and it introduces a new concept called *command-line flags*.
 
 >[!TIP]
 >You can Google to find out what all the data listed means, or better use the built in manual (`man`) pages.
@@ -297,15 +299,14 @@ $ man man
 **Googling is not cheating**, it is a great way to learn and is highly
 recommended.
 
-
 ### 2.1.3 Some things you will have noticed 
 
 Firstly, you have to type very carefully, any typo 
 will result in an error saying that the file or directory doesn't exist, e.g:
 
 ```
-$ cd dayy-1
-bash: cd: dayy-1: No such file or directory
+$ cd liinux-intro
+bash: cd: liinux-intro: No such file or directory
 ```
 
 A second thing you will have noticed is that some file
@@ -323,7 +324,7 @@ letters. It will also autocomplete the portion of the file or directory
 name that is shared between them all and wait for you to type more and
 hit tab again.
 
-Try it now. Navigate to `linux-intro/raw_data/` and list the files
+Try it now. Navigate to `linux-intro/data` and list the files
 present. You should have explored using tab to autocomplete the
 directory names at every level. If not quickly jump back using `cd -` and
 try again.
@@ -336,7 +337,7 @@ UNIX based systems provide several powerful utilities for editing and
 inspecting files, either from the command line, or in a simple graphical
 user interface. You can use the gedit program in Linux to open files for
 viewing and editing in a graphical way, much like **Notepad** or
-**TextWrangler** in Windows or OSX. Don't start doing this though, it
+**BBEdit** in Windows or MacOS. Don't start doing this though, it
 has limitations and is a waste of your time on this course, learn the
 command line instead. Here we will use the simple text editor nano there
 are many others beyond the scope of this tutorial. The strength of nano
@@ -344,7 +345,7 @@ lies in its simplicity. Help: [a beginners guide to nano](http://www.howtogeek.c
 
 To view our **scaffold.fas** file in nano you should use the general
 unix approach of program-name filename, and assuming we are still in the
-**day-1** directory:
+correct directory:
 
 ```
 $ nano scaffold.fas
@@ -373,11 +374,15 @@ generally close most UNIX programs, if either of those don't work you
 can also use the Ctrl+C key combination to *kill* the program and return
 to the command prompt.
 
+>[!NOTE]
+>There are many more text editors for the terminal, which are much more powerful than nano. If you are interested in these check out: [vim](https://www.vim.org/) or [emacs](https://www.gnu.org/software/emacs/)
+>Theses editors have a steep learning curve but learning how to use them properly is highly rewarding.
+
+
 ### 2.2.2 Inspecting files
 
-nano allows us to edit the file *in situ*, however, if we just want to
-inspect the file we can display its contents using several other UNIX
-programs:
+`nano` allows us to edit the file *in situ*, however, if we just want to
+*inspect* the file there are several other UNIX tools which display a file's content on screen:
 
 1.  `cat` to print the whole file to the screen
 
@@ -387,7 +392,7 @@ programs:
 
 4.  `tail` to print the last few lines of the file on screen
 
-One of the problems with DNA sequence files is that they can be large -
+This is immediately relevant for us since one of the problems with DNA sequence files is that they can be large -
 several hundred megabytes to a few gigabytes is not uncommon. Viewing
 these files can be difficult, as the files need to be loaded into
 memory, and can therefore take a great deal of time for the text editor
@@ -397,7 +402,7 @@ efficient for viewing large files such as these.
 **TASK:** All these commands will be useful for you during this course.
 You should now try using less, head, tail and cat to practice seeing the
 text file `parmelia_sequences.fas` which can be found in
-`~/linux-intro/raw_data/fasta/`. Are you using ls to see what is available and tab to
+`~/linux-intro/data/raw_data/fasta/`. Are you using `ls` to see what is available and tab to
 complete the filename? How can you step through the file a screen at a
 time using less? Try Googling for the answer and demonstrate that it
 works.
@@ -427,7 +432,7 @@ We can count how many of the sequences are RPB1 by using the *count*
 flag (`-c`) with `grep` as follows:
 
 ```
-$ grep --c "RPB1" parmelia_sequences.fas
+$ grep -c "RPB1" parmelia_sequences.fas
 ```
 
 ### 2.2.4 How many sequences do I have?
@@ -453,8 +458,7 @@ around the search phrase?** Unfortunately your solution will probably
 delete the data file if you forget the quote marks! Why? Discuss
 
 Search the two files `scaffold.fas` and `parmelia_sequences.fas` you have
-already used to determine the number of sequence records. Make sure to
-discuss your solution.
+already used to determine the number of sequence records. Discuss your solution with your neighbor.
 
 >[!TIP]
 >you can use the up and down arrows to cycle through your
@@ -468,19 +472,18 @@ discuss your solution.
 
 ## 2.3 Search, replace, and write output to a new file
 
-grep is an excellent tool for undertaking simple yet fast searches
-within text files. But to search [and replace]{.underline} within a text
-file, or to redirect changes to a new file, we will need to use either
-sed or a simple script (OK there are actually numerous ways of doing
+`grep` is an excellent tool for undertaking simple yet fast searches
+within text files. But to search (and replace) within a text
+file, or to redirect changes to a new file, we will need to use another tool (OK there are actually numerous ways of doing
 this utilizing other tools but this manual will only deal with *simple*
 examples with sed or python scripts).
 
 ### 2.3.1 sed the stream editor
 
 `sed` works best when we need to deal with files as single lines, or rows
-of text data. Since sed doesn't try to take the whole file into memory,
+of text data. Since `sed` doesn't try to take the whole file into memory,
 instead dealing with a line at a time, it has real advantages when files
-are enormous- as they often are for sequence data.
+are huge - as they often are for sequence data.
 
 To search for and replace `RPB1` with `RPB_1` in our
 `parmelia_sequences.fas` file we could do the following:
@@ -500,8 +503,8 @@ signifies an input, so we are taking input from our
 `RPB1toRPB_1.fas`.
 
  Always give meaningful names to files and directories, even if that
-makes them seem long. The person you are doing this for is 'future you'
-who will remember less than you think, need clear filenames as one of
+makes them seem long. The person you are doing this for is *future you*
+who will remember less than you think. So clear filenames is one of
 the ways to make sense of the data, how it has been transformed, and to
 help record a reproducible experiment. It is very useful to have a
 filename like:
@@ -521,7 +524,7 @@ had 1000 files from separate sampling points, you could choose which
 files to pull data from based on names like "whitby" or "FDS". If you
 wanted to grab data just from enoplid nematodes from only the Whitby
 samples you could find and list (con*cat*enate) those
-with a search, and pipes \| to string several jobs together. Below is an
+with a search, and pipes `|` to string several jobs together. Below is an
 example, these files don't exist here, but you are going to try it
 yourself on files that do.
 
@@ -545,18 +548,7 @@ whitby-FDS12763-nematode18S-lenfiltered200bp-uniquespecies.fas
 
 It may seem an annoying amount of typing to write this much information
 in filenames, but it isn't *you* who should be doing the writing, it's
-your script. It is a difficult mindset to overcome, but really useful.
-
-### Task
-
-Go to the headers directory. Extract all the header lines from
-headers-test.fas and write to a new file with an informative name. How
-many are there? Are there any duplicates or are they all unique (uniq)?
-Now repeat this for all the headers containing 2 separate search terms
-(eg taxon names) that you think of. It doesn't matter what they are. You
-can examine the headers in the file with your new unix skills to get
-inspiration. Extra points if you can do this in one single command.
-[[Answer]](https://docs.google.com/document/d/1h9d0JrTsDLzsOV5klMkD47807dWTmcXN3uxoYp0ei64/edit#heading=h.zh5kap4uuux6)
+your script. It is a different mindset, but really useful.
 
 
 ### 2.3.2 echo
@@ -608,7 +600,6 @@ others:
 $ echo -e "column1\tcolumn2\nRNA\tDNA" > rna-dna-columns.txt
 ```
 
-
 Check your success. These commands are useful when writing a lot of data
 to a file programmatically, and when format such as having a defined
 number of columns or lines is important, which is a *very*
@@ -625,11 +616,11 @@ open, paste. The task at the command line however *scales* easily from
 
 ### Task
 
-Go to the linux-intro/data/fasta-to-combine directory. Concatenate all 10
+Go to the `linux-intro/data/fasta-to-combine` directory. Combine all 10
 sequence files into a new file with an informative name. Do not add the
 contents of the `readme.txt` file. Demonstrate your success.
 
-Lastly echo can write file information like file names
+Lastly `echo` can write file information like file names
 
 ```
 $ echo *.fas > fasta-file-names.txt
@@ -653,13 +644,13 @@ Google for many, many more).
 
 You have a file `example-rna.fas` in the
 `linux-intro/data/backtranscribe` directory which holds [fasta
-format](http://drive.google.com/open?id=1SE1YxDwsLmndZX8DgBx2jq8RPk1yRb2aJOqk7cUm0Ys)
+format](https://en.wikipedia.org/wiki/FASTA_format)
 RNA sequences. You need to change these sequences to DNA. You could
 search and replace U with T using sed as above (try to write this
 command for yourself). Unfortunately that will change every U to a T in
 the sequence headers too. Instead a simple, but much more flexible and
 intelligent, python script could be used,. This has been written for you
-called `RNAtoDNA.py`
+called `RNAtoDNA.py`.
 
 ### 2.4.2 Python scripts
 
@@ -737,7 +728,7 @@ are a powerful way to link together lots of different commands and then
 execute (run) them all at once. Below is a walk-through demonstrating a
 shell script.
 
-In our *linux-intro/data* directory we have a shell script: `readmap_all.sh`
+In our 'linux-intro/data' directory we have a shell script: `readmap_all.sh`
 
 Its very easy to get lost or panic in the next paragraphs. *Don't panic!*
 Just skim this section and ask someone. It\'s a deliberately complex
